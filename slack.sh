@@ -3,9 +3,17 @@
 USERNAME="webhookbot"
 CHANNEL="#general"
 ICON=":bike:"
-WEBHOOK_URL="https://hooks.slack.com/services/XXXXXXXXXXXXXXXXXXXX"
+WEBHOOK_URL="https://hooks.slack.com/services/XXXXXXXXXXXXXXXXXXXXX"
 
 author="author name"
+
+last_used=`./get-last-used.sh`
+fff='```'
+text=`cat << EOF
+$fff
+$last_used
+$fff
+EOF`
 
 data=`cat << EOF
     payload={
@@ -16,8 +24,9 @@ data=`cat << EOF
     "attachments": [{
         "fallback": "branchの整理をしてください",
         "color": "#003399",
-        "pretext": "$PERIOD_MONTH ヶ月以上更新されて無いbranchがあります" ,
+        "pretext": "$text" ,
         "title": "対象branch",
+        "mrkdwn_in": ["text", "pretext"],
         "text": "確認をお願いします @$author:"
       }]
   }
